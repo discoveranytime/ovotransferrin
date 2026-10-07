@@ -9,8 +9,8 @@
 <style>
 *{box-sizing:border-box; margin:0; padding:0}
 :root{
-  --bg:#0f0c09; --bg2:#12100c; --card:#171310; --card2:#100d0b;
-  --line:#2b2521; --line2:#3c332c;
+  --bg:#131114; --bg2:#16131a; --card:#191520; --card2:#121016;
+  --line:#2c2635; --line2:#3d3549;
   --text:#f8f4ef; --muted:#aaa197; --faint:#6f675d;
   --acc1:#d08a4e; --acc2:#5fa698; --acc3:#c47e8e;
   --grad:linear-gradient(135deg,var(--acc1),var(--acc2),var(--acc3));
@@ -71,7 +71,7 @@ body{
 .shell{display:flex; min-height:100vh; position:relative; z-index:1}
 .sidebar{
   position:fixed; top:0; left:0; bottom:0; width:252px; z-index:100;
-  background:rgba(15,12,9,.94); backdrop-filter:blur(10px); border-right:1px solid var(--line);
+  background:rgba(19,17,20,.94); backdrop-filter:blur(10px); border-right:1px solid var(--line);
   display:flex; flex-direction:column; padding:24px 16px; gap:6px;
   transition:transform .32s ease, background-color .45s ease, border-color .45s ease;
 }
@@ -94,12 +94,12 @@ body{
 .sp-bar{height:6px; border-radius:3px; background:#ffffff10; overflow:hidden}
 .sp-bar #sideFill{display:block; height:100%; width:0; background:var(--grad); border-radius:3px}
 [data-theme="light"] .sp-bar{background:rgba(30,22,16,.09)}
-.menu-btn{position:fixed; top:12px; left:12px; z-index:190; width:42px; height:42px; border-radius:12px; background:rgba(15,12,9,.88); backdrop-filter:blur(8px); border:1px solid var(--line); color:var(--text); font-size:18px; cursor:pointer; display:none; align-items:center; justify-content:center}
+.menu-btn{position:fixed; top:12px; left:12px; z-index:190; width:42px; height:42px; border-radius:12px; background:rgba(19,17,20,.88); backdrop-filter:blur(8px); border:1px solid var(--line); color:var(--text); font-size:18px; cursor:pointer; display:none; align-items:center; justify-content:center}
 .side-backdrop{position:fixed; inset:0; background:#000a; z-index:150; opacity:0; pointer-events:none; transition:opacity .3s ease}
 body.side-open .side-backdrop{opacity:1; pointer-events:auto}
 main{flex:1; min-width:0; padding-left:252px}
 .wrap{max-width:1060px; margin:0 auto; padding:0 32px}
-.mrail{display:none; position:sticky; top:0; z-index:90; background:rgba(15,12,9,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); overflow-x:auto; scrollbar-width:none; padding:10px 16px; gap:8px}
+.mrail{display:none; position:sticky; top:0; z-index:90; background:rgba(19,17,20,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); overflow-x:auto; scrollbar-width:none; padding:10px 16px; gap:8px}
 [data-theme="light"] .mrail{background:rgba(240,238,233,.92)}
 .mrail::-webkit-scrollbar{display:none}
 .mrail a{flex:0 0 auto; color:var(--muted); text-decoration:none; font-size:12.5px; font-weight:700; padding:7px 12px; border-radius:999px; border:1px solid var(--line); white-space:nowrap}
@@ -445,7 +445,7 @@ footer strong{color:var(--muted)}
 <text x="320" y="63" text-anchor="middle" font-size="14" fill="#e8b07e" font-weight="800">TEST-TUBE / ENZYME ASSAYS</text>
 <text x="320" y="84" text-anchor="middle" font-size="12" class="dm">ACE IC50 ≈ 20 μM · ChE effects ✓</text>
 <circle cx="520" cy="68" r="10" fill="#d08a4e"/>
-<path d="M515 68 L519 72 L526 63" stroke="#0f0c09" stroke-width="2.5" fill="none"/>
+<path d="M515 68 L519 72 L526 63" stroke="#131114" stroke-width="2.5" fill="none"/>
 </g>
 <g opacity=".65">
 <rect x="90" y="112" width="460" height="56" rx="12" fill="#5fa69810" stroke="#5fa698" stroke-dasharray="8 6"/>
