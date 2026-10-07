@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ovotransferrin (328-332) — RVPSL: The Egg-White Peptide Fragment — Interactive Explainer</title>
+<meta name="description" content="An interactive explainer on Ovotransferrin (328-332) (RVPSL): a five-amino-acid egg-white peptide studied for ACE inhibition and early Alzheimer's-related enzyme effects. Strictly preclinical — no human trials, research chemical only.">
+<script>try{var __t=localStorage.getItem('ovo-theme');if(__t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<style>
+*{box-sizing:border-box; margin:0; padding:0}
+:root{
+  --bg:#0f0c09; --bg2:#12100c; --card:#171310; --card2:#100d0b;
+  --line:#2b2521; --line2:#3c332c;
+  --text:#f8f4ef; --muted:#aaa197; --faint:#6f675d;
+  --acc1:#d08a4e; --acc2:#5fa698; --acc3:#c47e8e;
+  --grad:linear-gradient(135deg,var(--acc1),var(--acc2),var(--acc3));
+  --radius:16px;
+}
+[data-theme="light"]{
+  --bg:#e9e7e2; --bg2:#e1ddd5; --card:#ffffff; --card2:#f5f2eb;
+  --line:#d8d0c5; --line2:#c4b8a9;
+  --text:#201913; --muted:#5d534a; --faint:#8d8377;
+  --acc1:#a8642c; --acc2:#3f7f72; --acc3:#a05568;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important; transition:none!important} }
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.65; font-size:16px; overflow-x:hidden;
+  background-image:radial-gradient(1100px 520px at 12% -5%, #d08a4e14 0%, transparent 60%),
+                   radial-gradient(900px 480px at 50% 0%, #5fa6980e 0%, transparent 55%),
+                   radial-gradient(900px 480px at 95% 8%, #c47e8e10 0%, transparent 55%);
+  transition:background-color .45s ease, color .45s ease;
+}
+::selection{background:#d08a4e55}
+#progress{position:fixed; top:0; left:0; right:0; height:3px; z-index:300; pointer-events:none}
+#progressFill{height:100%; width:0; background:var(--grad); border-radius:0 3px 3px 0}
+#bg-dots{position:fixed; inset:0; z-index:0; pointer-events:none; width:100%; height:100%}
+[data-theme="light"] #bg-dots{opacity:.55}
+#confetti{position:fixed; inset:0; z-index:390; pointer-events:none; opacity:0; transition:opacity .6s ease}
+#confetti.show{opacity:1}
+.toast{
+  position:fixed; left:50%; bottom:28px; transform:translate(-50%,80px); z-index:395;
+  background:var(--card); border:1px solid var(--line); color:var(--text);
+  padding:12px 22px; border-radius:999px; font-weight:700; font-size:14.5px;
+  box-shadow:0 8px 28px rgba(0,0,0,.35); opacity:0; pointer-events:none;
+  transition:transform .5s cubic-bezier(.2,.9,.3,1.2), opacity .5s ease;
+}
+.toast.show{transform:translate(-50%,0); opacity:1}
+.theme-toggle{
+  position:fixed; top:12px; right:14px; z-index:400;
+  display:flex; align-items:center; gap:9px;
+  background:var(--card); border:1px solid var(--line); border-radius:999px;
+  padding:5px 13px 5px 6px; cursor:pointer; color:var(--text); font:inherit;
+  box-shadow:0 4px 16px rgba(0,0,0,.28);
+  transition:transform .22s ease, background-color .45s ease, border-color .45s ease;
+}
+.theme-toggle:hover{transform:scale(1.07)}
+.theme-toggle:focus-visible{outline:2px solid var(--acc1); outline-offset:3px}
+.tt-track{position:relative; width:52px; height:28px; border-radius:999px; background:var(--bg2); border:1px solid var(--line); flex:0 0 auto}
+.tt-knob{
+  position:absolute; top:2px; left:2px; width:22px; height:22px; border-radius:50%;
+  background:var(--grad); display:flex; align-items:center; justify-content:center;
+  font-size:12px; color:#fff8f2; transition:transform .3s cubic-bezier(.3,1.35,.4,1);
+}
+[data-theme="light"] .tt-knob{transform:translateX(24px)}
+.tt-knob .ic-sun{display:none}
+[data-theme="light"] .tt-knob .ic-moon{display:none}
+[data-theme="light"] .tt-knob .ic-sun{display:inline}
+.tt-label{font-size:12.5px; font-weight:700; color:var(--muted); min-width:34px; text-align:left}
+.shell{display:flex; min-height:100vh; position:relative; z-index:1}
+.sidebar{
+  position:fixed; top:0; left:0; bottom:0; width:252px; z-index:100;
+  background:rgba(15,12,9,.94); backdrop-filter:blur(10px); border-right:1px solid var(--line);
+  display:flex; flex-direction:column; padding:24px 16px; gap:6px;
+  transition:transform .32s ease, background-color .45s ease, border-color .45s ease;
+}
+[data-theme="light"] .sidebar{background:rgba(240,238,233,.94)}
+.side-brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:16px; padding:2px 8px 18px}
+.side-brand .drop{width:32px; height:32px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; background:var(--grad); font-size:17px; flex:0 0 auto}
+.sidenav{display:flex; flex-direction:column; gap:4px; position:relative}
+.side-indicator{position:absolute; left:-16px; top:0; width:4px; height:40px; border-radius:2px; background:var(--grad); box-shadow:0 0 12px #d08a4e88; opacity:0; transition:top .38s cubic-bezier(.2,.7,.2,1), height .38s cubic-bezier(.2,.7,.2,1), opacity .3s ease; pointer-events:none}
+.sidenav a{display:flex; align-items:center; gap:12px; color:var(--muted); text-decoration:none; font-size:13px; font-weight:600; padding:8px 12px; border-radius:10px; border:1px solid transparent}
+.sidenav a .n{font-size:11px; font-weight:800; color:var(--faint); background:#ffffff0c; border-radius:6px; padding:3px 7px; flex:0 0 auto}
+.sidenav a:hover{color:var(--text); background:#ffffff0c}
+.sidenav a.active{color:var(--text); background:#d08a4e14; border-color:#d08a4e44}
+.sidenav a.active .n{color:var(--acc1); background:#d08a4e22}
+[data-theme="light"] .sidenav a:hover{background:rgba(30,22,16,.06)}
+.side-foot{margin-top:auto; display:flex; align-items:center; gap:10px; padding:8px}
+.side-foot span{font-size:12.5px; color:var(--faint); font-weight:600}
+.side-progress{padding:16px 10px 6px; margin-top:12px; border-top:1px solid var(--line)}
+.sp-head{display:flex; justify-content:space-between; align-items:baseline; font-size:11px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--faint); margin-bottom:8px}
+.sp-head #sidePct{color:var(--acc1); font-size:13px; letter-spacing:0}
+.sp-bar{height:6px; border-radius:3px; background:#ffffff10; overflow:hidden}
+.sp-bar #sideFill{display:block; height:100%; width:0; background:var(--grad); border-radius:3px}
+[data-theme="light"] .sp-bar{background:rgba(30,22,16,.09)}
+.menu-btn{position:fixed; top:12px; left:12px; z-index:190; width:42px; height:42px; border-radius:12px; background:rgba(15,12,9,.88); backdrop-filter:blur(8px); border:1px solid var(--line); color:var(--text); font-size:18px; cursor:pointer; display:none; align-items:center; justify-content:center}
+.side-backdrop{position:fixed; inset:0; background:#000a; z-index:150; opacity:0; pointer-events:none; transition:opacity .3s ease}
+body.side-open .side-backdrop{opacity:1; pointer-events:auto}
+main{flex:1; min-width:0; padding-left:252px}
+.wrap{max-width:1060px; margin:0 auto; padding:0 32px}
+.mrail{display:none; position:sticky; top:0; z-index:90; background:rgba(15,12,9,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); overflow-x:auto; scrollbar-width:none; padding:10px 16px; gap:8px}
+[data-theme="light"] .mrail{background:rgba(240,238,233,.92)}
+.mrail::-webkit-scrollbar{display:none}
+.mrail a{flex:0 0 auto; color:var(--muted); text-decoration:none; font-size:12.5px; font-weight:700; padding:7px 12px; border-radius:999px; border:1px solid var(--line); white-space:nowrap}
+.mrail a.active{color:#fff8f2; background:var(--grad); border-color:transparent}
+.hero{padding:72px 0 26px; position:relative}
+.kicker{display:inline-block; font-size:12px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--acc1); border:1px solid #d08a4e55; background:#d08a4e12; padding:8px 16px; border-radius:999px; margin-bottom:20px}
+h1{font-size:clamp(36px,5.2vw,60px); line-height:1.08; letter-spacing:-1.5px; font-weight:900; margin-bottom:16px}
+h1 .grad{background:linear-gradient(92deg,var(--acc1),var(--acc2),var(--acc3)); -webkit-background-clip:text; background-clip:text; color:transparent}
+.hero p.lead{font-size:18px; color:var(--muted); max-width:62ch}
+.hero p.lead strong{color:var(--text)}
+.seq{display:inline-block; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-weight:800; letter-spacing:3px; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; font-size:1.15em}
+.excite{position:relative; display:flex; gap:18px; align-items:center; border-radius:var(--radius); padding:22px 26px; margin:8px 0 4px; background:linear-gradient(180deg,var(--card),var(--card2)); overflow:hidden}
+.excite::before{content:""; position:absolute; inset:0; border-radius:var(--radius); padding:2px; background:var(--grad); -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none}
+.excite-emoji{font-size:44px; flex:0 0 auto; animation:excite-bounce 1.6s ease-in-out infinite}
+@keyframes excite-bounce{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(6deg)}}
+@media (prefers-reduced-motion: reduce){ .excite-emoji{animation:none} }
+.excite h3{font-size:22px; font-weight:900; letter-spacing:-.4px; margin-bottom:4px; background:linear-gradient(92deg,var(--acc1),var(--acc2),var(--acc3)); -webkit-background-clip:text; background-clip:text; color:transparent}
+.excite p{color:var(--muted); font-size:15.5px; margin:0}
+.excite p strong{color:var(--text)}
+.disclaimer{border:1px solid #d08a4e44; background:#d08a4e0d; border-radius:var(--radius); padding:18px 22px; font-size:14px; color:var(--muted); margin:26px 0}
+.disclaimer strong{color:var(--acc1)}
+section.chapter{padding:40px 0 8px; scroll-margin-top:16px}
+.ch-head{display:flex; align-items:center; gap:14px; margin-bottom:6px}
+.ch-num{flex:0 0 auto; min-width:52px; height:40px; padding:0 14px; border-radius:12px; display:inline-flex; align-items:center; justify-content:center; font-weight:900; font-size:15px; color:#fff8f2; background:var(--grad)}
+h2{font-size:clamp(24px,3vw,32px); letter-spacing:-.6px; font-weight:800}
+.ch-sub{color:var(--muted); margin:2px 0 22px; max-width:72ch}
+.ch-sub strong{color:var(--text)}
+.card{background:linear-gradient(180deg,var(--card),var(--card2)); border:1px solid var(--line); border-radius:var(--radius); padding:24px; transition:background-color .45s ease, border-color .45s ease}
+.card h3{font-size:17px; margin-bottom:8px}
+.card p{color:var(--muted); font-size:15px; margin:8px 0}
+.card p strong, .card li strong{color:var(--text)}
+.card ul{margin:10px 0 4px 20px; color:var(--muted); font-size:15px}
+.card li{margin:6px 0}
+.grid{display:grid; gap:16px}
+.grid.c2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.grid.c3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.dont{border:1px solid #f8717144; background:#f871710c; border-radius:12px; padding:14px 18px; font-size:14.5px; color:var(--muted); margin-top:12px}
+.dont strong{color:#f87171}
+.keyline{border:1px solid rgba(208,138,78,.4); border-left:4px solid var(--acc1); border-radius:12px; padding:16px 20px; margin:18px 0; background:rgba(208,138,78,.06); color:var(--muted); font-size:15px}
+.keyline strong{color:var(--text)}
+.checkline{display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--line); font-size:15px; color:var(--muted)}
+.checkline:last-child{border-bottom:none}
+.checkline .mk{flex:0 0 auto; font-size:19px}
+.checkline strong{color:var(--text)}
+.gloss{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:linear-gradient(180deg,var(--card),var(--card2))}
+.g-item{border-bottom:1px solid var(--line)}
+.g-item:last-child{border-bottom:none}
+.g-q{width:100%; background:none; border:none; color:var(--text); font:inherit; font-size:1.02rem; font-weight:700; text-align:left; padding:1.05rem 1.4rem; cursor:pointer; display:flex; justify-content:flex-start; align-items:center; gap:1rem}
+.g-q:hover{background:#ffffff08}
+.g-q .term{color:var(--acc1)}
+.g-item:nth-child(3n+2) .g-q .term{color:var(--acc2)}
+.g-item:nth-child(3n) .g-q .term{color:var(--acc3)}
+.g-q .plus{flex:0 0 auto; width:1.7rem; height:1.7rem; border-radius:50%; border:1px solid var(--line); margin-left:auto; display:inline-flex; align-items:center; justify-content:center; font-size:1.1rem; color:var(--muted); transition:all .3s}
+.g-item.open .g-q .plus{transform:rotate(45deg); background:var(--grad); color:#fff8f2; border-color:transparent}
+.gthumb{flex:0 0 auto; width:42px; height:42px; border-radius:12px; border:1px solid var(--line); animation:gaFloat 5s ease-in-out infinite}
+.gthumb.v2{animation:gaBreathe 4.4s ease-in-out infinite}
+.gthumb.v3{animation:gaTilt 6s ease-in-out infinite}
+@keyframes gaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes gaBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes gaTilt{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@media (prefers-reduced-motion: reduce){ .gthumb{animation:none} }
+.g-a{max-height:0; overflow:hidden; transition:max-height .45s ease}
+.g-a .gsci{padding:0 1.4rem 1rem; color:var(--muted); font-size:.95rem}
+.g-a .gsci strong{color:var(--text)}
+.gslabel{display:block; font-size:.7rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); margin-bottom:.35rem}
+.g-a .plain{margin:0 1.4rem 1.3rem; background:#ffffff08; border:1px dashed #ffffff22; border-radius:12px; padding:1rem 1.2rem; font-size:.96rem; color:var(--muted)}
+.g-a .plain .plabel{display:block; font-size:.72rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); margin-bottom:.35rem}
+.diagram{background:linear-gradient(180deg,var(--card),var(--card2)); border:1px solid var(--line); border-radius:16px; padding:22px 24px 18px; margin:36px 0 4px}
+.d-title{font-size:13px; font-weight:800; letter-spacing:1.6px; text-transform:uppercase; color:var(--faint); margin-bottom:8px}
+.diagram svg{width:100%; height:auto; display:block}
+.diagram text{font-family:inherit}
+.dt{fill:var(--text); font-weight:700}
+.dm{fill:var(--muted)}
+.d-cap{font-size:13.5px; color:var(--muted); margin-top:10px}
+.d-cap strong{color:var(--text)}
+.flow{stroke-dasharray:7 7; animation:d-dash 1.1s linear infinite}
+@keyframes d-dash{to{stroke-dashoffset:-28}}
+.d-pulse{transform-box:fill-box; transform-origin:center; animation:d-pulse 2.6s ease-in-out infinite}
+@keyframes d-pulse{0%,100%{opacity:.55; transform:scale(1)}50%{opacity:1; transform:scale(1.08)}}
+.d-bob{transform-box:fill-box; transform-origin:center; animation:d-bob 3s ease-in-out infinite}
+@keyframes d-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.d-ring{transform-box:fill-box; transform-origin:center; animation:d-ring 2.8s ease-out infinite}
+@keyframes d-ring{0%{opacity:.8; transform:scale(.55)}100%{opacity:0; transform:scale(1.55)}}
+@media (prefers-reduced-motion: reduce){ .flow,.d-pulse,.d-bob,.d-ring{animation:none} }
+.btt-tile{max-width:620px; margin:34px auto 8px}
+.btt-btn{
+  width:100%; min-height:42px; display:flex; align-items:center; gap:12px;
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  border:1px solid transparent; border-radius:18px;
+  background-clip:padding-box;
+  position:relative; cursor:pointer; color:var(--muted); font:inherit; font-size:15px; font-weight:700;
+  padding:4px 18px; transition:color .25s ease, background-color .25s ease;
+}
+.btt-btn::before{
+  content:""; position:absolute; inset:0; border-radius:18px; padding:1px;
+  background:var(--grad);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
+}
+.btt-btn:hover{color:var(--text); background-color:#ffffff08}
+.btt-btn:focus-visible{outline:2px solid var(--acc1); outline-offset:3px}
+.btt-orb{flex:0 0 auto; width:8px; height:8px; border-radius:50%; background:var(--acc1); box-shadow:0 0 10px var(--acc1); animation:orbPulse 2.2s ease-in-out infinite}
+@keyframes orbPulse{0%,100%{transform:scale(1); opacity:1}50%{transform:scale(1.5); opacity:.55}}
+@media (prefers-reduced-motion: reduce){ .btt-orb{animation:none} }
+.btt-label{flex:1; text-align:center}
+.btt-chev{flex:0 0 auto; font-size:17px; color:var(--faint)}
+.btt-btn:hover .btt-chev{color:var(--acc1)}
+footer{border-top:1px solid var(--line); margin-top:44px; padding:30px 0 46px; color:var(--faint); font-size:13.5px}
+footer strong{color:var(--muted)}
+.rv{opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease}
+.rv.in{opacity:1; transform:none}
+@media (prefers-reduced-motion: reduce){ .rv{opacity:1; transform:none} }
+.ev{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.7px;padding:3px 9px;border-radius:99px;margin:2px 4px 2px 0;vertical-align:middle;text-transform:uppercase;white-space:nowrap}
+.ev-lab{background:rgba(208,138,78,.13);color:#e8b07e;border:1px solid rgba(208,138,78,.45)}
+.ev-anim{background:rgba(95,166,152,.13);color:#8fd0c2;border:1px solid rgba(95,166,152,.45)}
+.ev-mech{background:transparent;color:#9fb0d8;border:1px solid rgba(120,135,180,.4)}
+.ev-con{background:transparent;color:#8b93a8;border:1px dashed rgba(120,135,180,.45)}
+[data-theme="light"] .ev-lab{color:#8a4d1d}
+[data-theme="light"] .ev-anim{color:#2c6b60}
+[data-theme="light"] .ev-mech{color:#475569}
+[data-theme="light"] .ev-con{color:#64748b}
+.formula{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:16px 0}
+.fchip{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-weight:700;font-size:14px;color:var(--muted)}
+.fchip.hi{border-color:var(--acc2);color:var(--text)}
+.fop{font-size:20px;color:var(--faint);font-weight:800}
+@media (min-width:901px){ .menu-btn,.side-backdrop{display:none!important} }
+@media (max-width:900px){
+  main{padding-left:0}
+  .sidebar{transform:translateX(-106%); width:282px; z-index:200}
+  body.side-open .sidebar{transform:none}
+  .menu-btn{display:inline-flex}
+  .mrail{display:flex}
+  .wrap{padding:0 18px}
+  .hero{padding:40px 0 16px}
+  .card{padding:18px 20px}
+  .theme-toggle{top:64px}
+}
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"><div id="progressFill"></div></div>
+<svg id="bg-dots" aria-hidden="true"></svg>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite">You made it to the end 🎉</div>
+<button class="theme-toggle" id="themeToggle" role="switch" aria-checked="false" aria-label="Toggle dark and light mode">
+  <span class="tt-track" aria-hidden="true"><span class="tt-knob"><span class="ic-moon">☾</span><span class="ic-sun">☀</span></span></span>
+  <span class="tt-label" id="ttLabel">Dark</span>
+</button>
+<div class="shell">
+<aside class="sidebar" id="sidebar" aria-label="Site navigation">
+<div class="side-brand"><span class="drop">🥚</span> Ovotransferrin 328-332</div>
+<nav class="sidenav" id="chapternav">
+<span class="side-indicator" id="sideIndicator" aria-hidden="true"></span>
+<a href="#ch1"><span class="n">01</span>What it is</a>
+<a href="#ch2"><span class="n">02</span>Where it comes from</a>
+<a href="#ch3"><span class="n">03</span>ACE inhibition</a>
+<a href="#ch4"><span class="n">04</span>The Alzheimer's angle</a>
+<a href="#ch5"><span class="n">05</span>What the evidence shows</a>
+<a href="#ch6"><span class="n">06</span>Timeline</a>
+<a href="#ch7"><span class="n">07</span>Safety picture</a>
+<a href="#ch8"><span class="n">08</span>Who it's for</a>
+<a href="#ch9"><span class="n">09</span>Glossary</a>
+<a href="#ch10"><span class="n">10</span>Takeaways</a>
+</nav>
+<div class="side-progress" aria-hidden="true">
+<div class="sp-head"><span>Reading</span><span id="sidePct">0%</span></div>
+<div class="sp-bar"><span id="sideFill"></span></div>
+</div>
+<div class="side-foot"><span>Research chemical · preclinical only</span></div>
+</aside>
+<button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+<div class="side-backdrop" id="sideBackdrop"></div>
+<main>
+<div class="mrail" id="mrail">
+<a href="#ch1">01 · What it is</a><a href="#ch2">02 · Origin</a><a href="#ch3">03 · ACE</a><a href="#ch4">04 · Alzheimer angle</a><a href="#ch5">05 · Evidence</a><a href="#ch6">06 · Timeline</a><a href="#ch7">07 · Safety</a><a href="#ch8">08 · Who</a><a href="#ch9">09 · Terms</a><a href="#ch10">10 · Takeaways</a>
+</div>
+<div class="wrap">
+<div class="hero">
+<span class="kicker">🧪 Research peptide · preclinical only</span>
+<h1>Ovotransferrin (328-332): <span class="grad">five amino acids from egg white, studied for blood-pressure enzymes</span></h1>
+<p class="lead">Known as <span class="seq">R V P S L</span> — <strong>RVPSL</strong> — this short synthetic peptide is a fragment of the egg-white protein <strong>ovotransferrin</strong>. In laboratory assays it <strong>inhibits ACE</strong>, an enzyme involved in raising blood pressure. All findings are <strong>preclinical</strong>: no human trials, no approved uses, research chemical only.</p>
+</div>
+<div class="excite rv">
+<div class="excite-emoji">⚗️</div>
+<div>
+<h3>Strictly preclinical — zero human data</h3>
+<p>Everything known comes from <strong>test-tube enzyme assays and limited animal work</strong>. There are no human safety data, no approved medical uses, and no established way to take this peptide. Lab findings do not translate directly to people.</p>
+</div>
+</div>
+<div class="disclaimer rv">
+<strong>⚠️ Educational content — not medical advice.</strong> This page summarizes publicly available laboratory research on Ovotransferrin (328-332), a research-only peptide fragment. It is not a medicine, not a supplement, and not approved for any use. Full details in the footer.
+</div>
+
+<section class="chapter" id="ch1">
+<div class="ch-head"><span class="ch-num">01</span><h2>What Ovotransferrin (328-332) is</h2></div>
+<p class="ch-sub">Five amino acids, one lab curiosity — from egg white to test tube.</p>
+<div class="card rv">
+<p><strong>Ovotransferrin (328-332)</strong> is a <strong>short synthetic peptide</strong> with the amino-acid sequence <span class="seq">R V P S L</span> — <strong>Arg-Val-Pro-Ser-Leu</strong>, abbreviated <strong>RVPSL</strong>.</p>
+<p>It is a <strong>fragment of ovotransferrin</strong> (also called conalbumin), a major <strong>iron-binding protein in egg white</strong>. Researchers isolate or synthesize this five-amino-acid piece because it has shown <strong>specific biological activities in laboratory studies</strong> — most notably blocking an enzyme tied to blood pressure. <span class="ev ev-lab">In vitro</span></p>
+<p>It is sold strictly as a <strong>research chemical</strong> by specialized peptide suppliers — <strong>not a medicine, not a dietary supplement</strong>, not approved for any use.</p>
+<div class="keyline"><strong>The one-sentence version:</strong> RVPSL is a five-letter excerpt from an egg-white protein, studied in labs for its effect on blood-pressure enzymes — a research tool, not a treatment.</div>
+</div>
+</section>
+
+<section class="chapter" id="ch2">
+<div class="ch-head"><span class="ch-num">02</span><h2>Where it comes from</h2></div>
+<p class="ch-sub">Egg white is a library — this peptide is one borrowed page.</p>
+<div class="card rv">
+<p><strong>Ovotransferrin</strong> is one of the main proteins in <strong>egg white</strong>, where its day job is <strong>binding iron</strong> — locking the metal away so microbes can't use it. It's a large protein, hundreds of amino acids long.</p>
+<p><strong>Positions 328–332</strong> of that chain spell <span class="seq">R V P S L</span>. Cut out and synthesized on its own, this fragment behaves differently from the parent protein — a common story in the field of <strong>food-derived bioactive peptides</strong>, where short pieces of milk, soy, or egg proteins show enzyme effects in lab assays that the whole protein never displays. <span class="ev ev-con">Conceptual explanation</span></p>
+<div class="keyline"><strong>Why fragments matter:</strong> a whole protein is folded, bulky, and busy. A five-amino-acid piece is small enough to <strong>fit into enzyme active sites</strong> — which is exactly where RVPSL's story begins.</div>
+</div>
+</section>
+<div class="diagram rv">
+<p class="d-title">From egg white to five letters</p>
+<svg viewBox="0 0 640 260" role="img" aria-label="Egg white to ovotransferrin protein to the RVPSL five-amino-acid fragment">
+<g>
+<rect x="30" y="80" width="150" height="100" rx="14" fill="#d08a4e12" stroke="#d08a4e" stroke-width="2.5" class="d-bob"/>
+<text x="105" y="118" text-anchor="middle" font-size="34">🥚</text>
+<text x="105" y="152" text-anchor="middle" font-size="13" fill="#e8b07e" font-weight="800">EGG WHITE</text>
+</g>
+<path d="M190 130 L240 130" stroke="#8b93a8" stroke-width="3" class="flow"/>
+<path d="M230 120 L244 130 L230 140" fill="none" stroke="#8b93a8" stroke-width="3"/>
+<g>
+<rect x="250" y="80" width="170" height="100" rx="14" fill="#5fa69812" stroke="#5fa698" stroke-width="2.5"/>
+<text x="335" y="115" text-anchor="middle" font-size="13" fill="#8fd0c2" font-weight="800">OVOTRANSFERRIN</text>
+<text x="335" y="136" text-anchor="middle" font-size="11" class="dm">iron-binding protein</text>
+<text x="335" y="154" text-anchor="middle" font-size="11" class="dm">~700 amino acids</text>
+</g>
+<path d="M430 130 L480 130" stroke="#8b93a8" stroke-width="3" class="flow"/>
+<path d="M470 120 L484 130 L470 140" fill="none" stroke="#8b93a8" stroke-width="3"/>
+<g>
+<rect x="490" y="80" width="120" height="100" rx="14" fill="#c47e8e14" stroke="#c47e8e" stroke-width="2.5" class="d-pulse"/>
+<text x="550" y="112" text-anchor="middle" font-size="15" fill="#d69aa8" font-weight="800" font-family="ui-monospace,monospace" letter-spacing="2">RVPSL</text>
+<text x="550" y="134" text-anchor="middle" font-size="11" class="dm">residues</text>
+<text x="550" y="150" text-anchor="middle" font-size="11" class="dm">328–332</text>
+<text x="550" y="166" text-anchor="middle" font-size="11" fill="#d69aa8" font-weight="700">5 amino acids</text>
+</g>
+<text x="320" y="225" text-anchor="middle" font-size="12" class="dm">A whole protein, folded and busy → one five-letter excerpt, free to fit enzyme pockets</text>
+</svg>
+<p class="d-cap">The fragment is <strong>positions 328–332</strong> of the parent protein — synthesized on its own for lab study. <span class="ev ev-con">Conceptual explanation</span></p>
+</div>
+
+<section class="chapter" id="ch3">
+<div class="ch-head"><span class="ch-num">03</span><h2>The main activity: ACE inhibition</h2></div>
+<p class="ch-sub">Blocking the enzyme that tightens blood vessels — in a test tube.</p>
+<div class="card rv">
+<p><strong>ACE (angiotensin-converting enzyme)</strong> is an enzyme that helps <strong>raise blood pressure</strong>: it converts angiotensin I into the vessel-constricting angiotensin II, and it breaks down bradykinin, a vessel-relaxing signal. Blocking ACE is the mechanism of a whole class of <strong>prescription blood-pressure drugs</strong>.</p>
+<p>RVPSL's headline finding: it <strong>inhibits ACE in laboratory assays</strong>, with a reported <strong>IC50 of approximately 20 μM</strong> — the concentration needed to halve the enzyme's activity. That indicates <strong>moderate potency in the test tube</strong>. <span class="ev ev-lab">In vitro</span></p>
+<div class="keyline"><strong>Keep the scale honest:</strong> prescription ACE-inhibitor drugs block ACE at <strong>nanomolar</strong> concentrations — orders of magnitude lower than 20 micromolar. Moderate test-tube potency is interesting chemistry; it is not a medicine.</div>
+</div>
+</section>
+<div class="diagram rv">
+<p class="d-title">What blocking ACE means · the pathway</p>
+<svg viewBox="0 0 640 300" role="img" aria-label="ACE converts angiotensin I to angiotensin II raising blood pressure; RVPSL blocks ACE">
+<g>
+<rect x="40" y="60" width="170" height="70" rx="14" fill="#d08a4e10" stroke="#d08a4e"/>
+<text x="125" y="88" text-anchor="middle" font-size="13" fill="#e8b07e" font-weight="800">ANGIOTENSIN I</text>
+<text x="125" y="110" text-anchor="middle" font-size="11" class="dm">inactive precursor</text>
+</g>
+<g>
+<circle cx="320" cy="95" r="44" fill="#f8717114" stroke="#f87171" stroke-width="2.5"/>
+<text x="320" y="90" text-anchor="middle" font-size="16" fill="#f87171" font-weight="800">ACE</text>
+<text x="320" y="110" text-anchor="middle" font-size="10" class="dm">enzyme</text>
+<path d="M215 95 L270 95" stroke="#8b93a8" stroke-width="3" class="flow"/>
+</g>
+<g>
+<rect x="430" y="60" width="170" height="70" rx="14" fill="#f8717110" stroke="#f87171"/>
+<text x="515" y="88" text-anchor="middle" font-size="13" fill="#f87171" font-weight="800">ANGIOTENSIN II</text>
+<text x="515" y="110" text-anchor="middle" font-size="11" class="dm">vessels tighten · BP rises</text>
+<path d="M370 95 L425 95" stroke="#8b93a8" stroke-width="3" class="flow"/>
+</g>
+<g>
+<rect x="220" y="180" width="200" height="70" rx="14" fill="#5fa69814" stroke="#5fa698" stroke-width="2.5" class="d-pulse"/>
+<text x="320" y="208" text-anchor="middle" font-size="15" fill="#8fd0c2" font-weight="800" font-family="ui-monospace,monospace" letter-spacing="2">RVPSL</text>
+<text x="320" y="230" text-anchor="middle" font-size="11" class="dm">blocks ACE · IC50 ≈ 20 μM</text>
+<path d="M320 180 L320 145" stroke="#5fa698" stroke-width="3"/>
+<line x1="308" y1="152" x2="332" y2="152" stroke="#5fa698" stroke-width="4" stroke-linecap="round"/>
+</g>
+<text x="320" y="280" text-anchor="middle" font-size="12" class="dm">In a test tube: less ACE activity → less vessel-tightening signal. In people: untested.</text>
+</svg>
+<p class="d-cap">The <strong>mechanism is real chemistry</strong> — enzyme blocked, pathway interrupted. Whether that becomes lower blood pressure in a living body is <strong>unproven</strong>. <span class="ev ev-lab">In vitro</span></p>
+</div>
+
+<section class="chapter" id="ch4">
+<div class="ch-head"><span class="ch-num">04</span><h2>The Alzheimer's angle</h2></div>
+<p class="ch-sub">A second thread of curiosity — not a finding.</p>
+<div class="card rv">
+<p>Beyond ACE, laboratory work has noted <strong>possible activity against enzymes studied in Alzheimer's disease research</strong>:</p>
+<ul>
+<li><strong>Cholinesterase (ChE) inhibition</strong> — effects on the enzymes that break down acetylcholine, a neurotransmitter central to memory</li>
+<li><strong>Possible interactions with BACE1-related pathways</strong> — BACE1 (beta-site APP-cleaving enzyme 1) is involved in producing the amyloid fragments studied in Alzheimer's</li>
+</ul>
+<p>These observations are <strong>early-stage</strong>: enzyme-assay hints, not validated effects, and <strong>not confirmed in any human trial</strong>. <span class="ev ev-lab">In vitro</span></p>
+<div class="keyline"><strong>Read this carefully:</strong> "inhibits an enzyme studied in Alzheimer's research" is <strong>not</strong> "helps Alzheimer's." Dozens of molecules touch these enzymes in test tubes; almost none become brain medicines.</div>
+</div>
+</section>
+<div class="diagram rv">
+<p class="d-title">Potency in context · the 20-micromolar mark</p>
+<svg viewBox="0 0 640 260" role="img" aria-label="Potency scale showing RVPSL at 20 micromolar as moderate, far weaker than nanomolar drugs">
+<defs><linearGradient id="potGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fa698"/><stop offset=".5" stop-color="#d08a4e"/><stop offset="1" stop-color="#c47e8e"/></linearGradient></defs>
+<rect x="60" y="110" width="520" height="18" rx="9" fill="url(#potGrad)" opacity=".85"/>
+<text x="60" y="100" text-anchor="start" font-size="11" class="dm">stronger inhibition →</text>
+<text x="580" y="100" text-anchor="end" font-size="11" class="dm">← weaker</text>
+<g>
+<line x1="110" y1="100" x2="110" y2="150" stroke="#8fd0c2" stroke-width="2.5"/>
+<text x="110" y="170" text-anchor="middle" font-size="12" fill="#8fd0c2" font-weight="700">nM</text>
+<text x="110" y="188" text-anchor="middle" font-size="11" class="dm">prescription</text>
+<text x="110" y="202" text-anchor="middle" font-size="11" class="dm">ACE drugs</text>
+</g>
+<g>
+<line x1="330" y1="96" x2="330" y2="154" stroke="#e8b07e" stroke-width="4" class="d-pulse"/>
+<circle cx="330" cy="119" r="9" fill="#d08a4e"/>
+<text x="330" y="70" text-anchor="middle" font-size="14" fill="#e8b07e" font-weight="800">RVPSL ≈ 20 μM</text>
+<text x="330" y="170" text-anchor="middle" font-size="12" fill="#e8b07e" font-weight="700">moderate</text>
+<text x="330" y="188" text-anchor="middle" font-size="11" class="dm">test-tube potency</text>
+</g>
+<g opacity=".55">
+<line x1="520" y1="100" x2="520" y2="150" stroke="#8b93a8" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="520" y="170" text-anchor="middle" font-size="12" class="dm">mM</text>
+<text x="520" y="188" text-anchor="middle" font-size="11" class="dm">very weak</text>
+</g>
+<text x="320" y="232" text-anchor="middle" font-size="12" class="dm">Lower IC50 = stronger. RVPSL sits far from drug-grade potency.</text>
+</svg>
+<p class="d-cap"><strong>20 micromolar is the middle of the road</strong> — genuine enzyme activity, orders of magnitude weaker than actual ACE-inhibitor medicines. <span class="ev ev-lab">In vitro</span></p>
+</div>
+
+<section class="chapter" id="ch5">
+<div class="ch-head"><span class="ch-num">05</span><h2>What the evidence actually shows</h2></div>
+<p class="ch-sub">Test tubes: yes. Animals: a little. People: nothing.</p>
+<div class="card rv">
+<div class="checkline"><span class="mk">🧪</span><span><strong>In-vitro enzyme assays</strong> — ACE inhibition (IC50 ≈ 20 μM), cholinesterase effects, early BACE1-pathway notes. Measurable, repeatable chemistry in a dish. <span class="ev ev-lab">In vitro</span></span></div>
+<div class="checkline"><span class="mk">🐁</span><span><strong>Limited animal studies</strong> — some work in models of hypertension or neurodegeneration exists, but the published base is thin. <span class="ev ev-anim">Animal study</span></span></div>
+<div class="checkline"><span class="mk">🚫</span><span><strong>Human trials: zero.</strong> No efficacy data, no safety data, no dosing data — in anyone, for anything.</span></div>
+<div class="keyline"><strong>About those vendor claims:</strong> online sources sometimes present RVPSL as a potential "drug candidate" with <strong>fewer side effects than existing ACE inhibitors</strong>. Those statements are <strong>speculative</strong> — built solely on early laboratory work — and should not be read as evidence of clinical usefulness or safety. <span class="ev ev-con">Conceptual explanation</span></div>
+</div>
+</section>
+<div class="diagram rv">
+<p class="d-title">The evidence ladder · where RVPSL stands</p>
+<svg viewBox="0 0 640 280" role="img" aria-label="Evidence ladder: in vitro filled, animal partial, human empty">
+<g>
+<rect x="90" y="40" width="460" height="56" rx="12" fill="#d08a4e16" stroke="#d08a4e"/>
+<text x="320" y="63" text-anchor="middle" font-size="14" fill="#e8b07e" font-weight="800">TEST-TUBE / ENZYME ASSAYS</text>
+<text x="320" y="84" text-anchor="middle" font-size="12" class="dm">ACE IC50 ≈ 20 μM · ChE effects ✓</text>
+<circle cx="520" cy="68" r="10" fill="#d08a4e"/>
+<path d="M515 68 L519 72 L526 63" stroke="#0f0c09" stroke-width="2.5" fill="none"/>
+</g>
+<g opacity=".65">
+<rect x="90" y="112" width="460" height="56" rx="12" fill="#5fa69810" stroke="#5fa698" stroke-dasharray="8 6"/>
+<text x="320" y="135" text-anchor="middle" font-size="14" fill="#8fd0c2" font-weight="800">LIMITED ANIMAL WORK</text>
+<text x="320" y="156" text-anchor="middle" font-size="12" class="dm">thin published base · partial</text>
+<circle cx="520" cy="140" r="10" fill="none" stroke="#5fa698" stroke-width="2.5" stroke-dasharray="4 3"/>
+</g>
+<g opacity=".5">
+<rect x="90" y="184" width="460" height="56" rx="12" fill="none" stroke="#8b93a8" stroke-dasharray="8 6" stroke-width="2"/>
+<text x="320" y="207" text-anchor="middle" font-size="14" fill="#8b93a8" font-weight="800">HUMAN TRIALS</text>
+<text x="320" y="228" text-anchor="middle" font-size="12" class="dm">none conducted — rung is empty</text>
+<circle cx="520" cy="212" r="10" fill="none" stroke="#8b93a8" stroke-width="2.5"/>
+</g>
+<path d="M70 68 L70 212" stroke="#8b93a8" stroke-width="2" class="flow"/>
+<text x="320" y="268" text-anchor="middle" font-size="12" class="dm">One rung solid · one thin · the third hasn't started</text>
+</svg>
+<p class="d-cap">Enzyme chemistry ✓ · thin animal work ~ · <strong>human data: none</strong>. <span class="ev ev-con">Conceptual explanation</span></p>
+</div>
+
+<section class="chapter" id="ch6">
+<div class="ch-head"><span class="ch-num">06</span><h2>Timeline: what happens when</h2></div>
+<p class="ch-sub">Fast in glassware. Blank everywhere else.</p>
+<div class="card rv">
+<p><strong>In a test tube</strong>, ACE inhibition by RVPSL is <strong>measurable quickly</strong> — enzyme assays run in minutes to hours. That's chemistry, not medicine.</p>
+<p><strong>In animals</strong>, any reported work spans the usual <strong>days to weeks</strong> of experimental protocols. <span class="ev ev-anim">Animal study</span></p>
+<div class="dont"><strong>No human timeline exists.</strong> There are no established timelines for noticing effects in people — because no human studies have been conducted. Translation from test-tube inhibition to blood-pressure changes in people has <strong>not been demonstrated</strong>.</div>
+</div>
+</section>
+
+<section class="chapter" id="ch7">
+<div class="ch-head"><span class="ch-num">07</span><h2>Safety: knowns and unknowns</h2></div>
+<p class="ch-sub">The honest version: mostly unknowns — kept in separate boxes on purpose.</p>
+<div class="card rv">
+<p><strong>No human clinical trials have been conducted, so side-effect information in people does not exist.</strong> Everything below comes from laboratory context — not from humans taking this peptide.</p>
+<div class="checkline"><span class="mk">🧫</span><span><strong>Low acute toxicity in standard assays.</strong> In cell and enzyme assays, the peptide is generally regarded as a stable, small molecule with low acute toxicity. <span class="ev ev-lab">In vitro</span></span></div>
+<div class="checkline"><span class="mk">❓</span><span><strong>Effects in living organisms: unknown.</strong> Any potential effects from oral or injected use in living organisms remain uncharacterized — a test-tube result says nothing about what a body does with the molecule.</span></div>
+<div class="checkline"><span class="mk">⚠️</span><span><strong>Supplier quality varies.</strong> Quality, purity, and exact activity can differ between suppliers — proper analytical verification is required in any serious scientific work. What's in the vial is the researcher's responsibility to confirm.</span></div>
+<div class="dont"><strong>Research-chemical disclaimer:</strong> the compound is supplied <strong>exclusively for laboratory investigation</strong> — the standard "not for human or veterinary use" applies. It is not a supplement, not a medicine, and not a shortcut to anything.</div>
+</div>
+</section>
+
+<section class="chapter" id="ch8">
+<div class="ch-head"><span class="ch-num">08</span><h2>Who it may interest — and who should steer clear</h2></div>
+<p class="ch-sub">A research tool has researchers for an audience — and everyone else for a warning label.</p>
+<div class="grid c2">
+<div class="card rv">
+<h3>🔬 May be of interest to</h3>
+<ul>
+<li><strong>Food-derived bioactive peptide researchers</strong> — RVPSL is a textbook example of the field</li>
+<li>Investigators studying <strong>natural ACE inhibitors</strong> and blood-pressure regulation</li>
+<li>Those exploring <strong>potential neuroprotective compounds</strong> and related enzyme pathways</li>
+</ul>
+<p>Interest here is <strong>scientific</strong>: enzyme assays, cell culture, animal models — bench work, not bodies.</p>
+</div>
+<div class="card rv">
+<h3>🚫 Should steer clear</h3>
+<ul>
+<li><strong>Anyone considering self-experimentation</strong> — no human safety data exist</li>
+<li>People seeking treatment for <strong>high blood pressure</strong> — this is not a blood-pressure medicine</li>
+<li>People seeking anything for <strong>Alzheimer's disease</strong> — the enzyme hints are not treatments</li>
+<li><strong>Pregnant or breastfeeding</strong> individuals — no data</li>
+<li><strong>Children</strong> and the <strong>general public</strong> — no data</li>
+<li><strong>Anyone with medical conditions</strong> looking for an alternative therapy</li>
+</ul>
+</div>
+</div>
+<div class="dont rv"><strong>Bottom line:</strong> Ovotransferrin (328-332) is <strong>contraindicated for any non-research purpose</strong>. Outside controlled laboratory research, there is no appropriate use.</div>
+</section>
+<div class="diagram rv">
+<p class="d-title">The boundary · bench vs body</p>
+<svg viewBox="0 0 640 280" role="img" aria-label="Laboratory bench on one side, human figure on the other, separated by a barrier">
+<g>
+<rect x="40" y="60" width="220" height="160" rx="14" fill="#5fa69810" stroke="#5fa698" stroke-width="2.5"/>
+<text x="150" y="100" text-anchor="middle" font-size="30">⚗️</text>
+<text x="150" y="136" text-anchor="middle" font-size="14" fill="#8fd0c2" font-weight="800">THE BENCH</text>
+<text x="150" y="160" text-anchor="middle" font-size="11" class="dm">enzyme assays · cell culture</text>
+<text x="150" y="178" text-anchor="middle" font-size="11" class="dm">animal models · powders</text>
+<text x="150" y="200" text-anchor="middle" font-size="11" fill="#8fd0c2" font-weight="700">✓ appropriate</text>
+</g>
+<g>
+<rect x="290" y="60" width="60" height="160" rx="8" fill="#f8717114" stroke="#f87171" stroke-width="2.5" stroke-dasharray="8 6" class="d-pulse"/>
+<text x="320" y="140" text-anchor="middle" font-size="11" fill="#f87171" font-weight="800" transform="rotate(-90 320 140)">RESEARCH-USE ONLY</text>
+</g>
+<g opacity=".55">
+<rect x="380" y="60" width="220" height="160" rx="14" fill="none" stroke="#8b93a8" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="490" y="100" text-anchor="middle" font-size="30">🧍</text>
+<text x="490" y="136" text-anchor="middle" font-size="14" fill="#8b93a8" font-weight="800">PEOPLE</text>
+<text x="490" y="160" text-anchor="middle" font-size="11" class="dm">no trials · no safety data</text>
+<text x="490" y="178" text-anchor="middle" font-size="11" class="dm">no approved route or dose</text>
+<text x="490" y="200" text-anchor="middle" font-size="11" fill="#f87171" font-weight="700">✗ not for human use</text>
+</g>
+<text x="320" y="256" text-anchor="middle" font-size="12" class="dm">The standard research-chemical line — and it means exactly what it says.</text>
+</svg>
+<p class="d-cap">Bench: <strong>yes</strong>. Bodies: <strong>no</strong>. The barrier between them is the entire safety story. <span class="ev ev-con">Conceptual explanation</span></p>
+</div>
+
+<section class="chapter" id="ch9">
+<div class="ch-head"><span class="ch-num">09</span><h2>Understanding Ovotransferrin Terminology</h2></div>
+<p class="ch-sub">Twelve terms, each with its scientific meaning and a plain-English mirror. Tap each term.</p>
+<div class="gloss rv">
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#d08a4e18" stroke="#d08a4e"/><text x="21" y="27" text-anchor="middle" font-size="11" fill="#d08a4e" font-weight="800" font-family="monospace">328</text></svg><span class="term">Ovotransferrin</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>Ovotransferrin (also called conalbumin) is a major iron-binding glycoprotein of egg white, belonging to the transferrin family. Its biological role centers on sequestering iron, limiting microbial growth. It is a large protein of roughly 700 amino acids; the 328–332 fragment (RVPSL) is a short synthetic excerpt studied independently of the parent protein's functions.</div><div class="plain"><span class="plabel">Plain English</span>Ovotransferrin is one of the main proteins in egg white — its real job is grabbing iron so bacteria can't use it. It's a big protein, about 700 building blocks long. The 328–332 fragment is just five of those blocks, cut out and studied on its own for completely different reasons than the parent protein's iron work.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb v2" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#5fa69814" stroke="#5fa698"/><text x="21" y="26" text-anchor="middle" font-size="9" fill="#5fa698" font-weight="800" font-family="monospace">RVPSL</text></svg><span class="term">RVPSL</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>RVPSL is the single-letter amino-acid code for Arg-Val-Pro-Ser-Leu: arginine, valine, proline, serine, leucine. It denotes the exact five-residue sequence of Ovotransferrin (328-332). As a pentapeptide it is small enough to interact directly with enzyme active sites, which underlies its reported ACE-inhibitory activity in vitro.</div><div class="plain"><span class="plabel">Plain English</span>RVPSL is shorthand for the peptide's five building blocks: Arginine-Valine-Proline-Serine-Leucine. Five letters, five amino acids — that's the whole molecule. Its small size is the point: it's tiny enough to slot into the working pockets of enzymes, which is how it can block ACE in lab tests.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb v3" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#c47e8e14" stroke="#c47e8e"/><circle cx="21" cy="21" r="10" fill="none" stroke="#c47e8e" stroke-width="2.5"/><path d="M14 21 L19 26 L28 16" stroke="#c47e8e" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><span class="term">ACE</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>Angiotensin-converting enzyme is a zinc metalloprotease central to blood-pressure regulation. It converts angiotensin I to the vasoconstrictor angiotensin II and degrades bradykinin, a vasodilator — both actions raising blood pressure. ACE inhibitors (e.g., lisinopril, enalapril) are a cornerstone drug class for hypertension and heart failure. RVPSL inhibits ACE in vitro with an IC50 near 20 μM.</div><div class="plain"><span class="plabel">Plain English</span>ACE is an enzyme that raises blood pressure two ways: it creates a vessel-tightening signal and destroys a vessel-relaxing one. Blocking it is such a good idea that a whole family of blood-pressure pills (like lisinopril) does exactly that. RVPSL also blocks ACE — in a test tube, at moderate strength, which is a long way from being a blood-pressure treatment.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#d08a4e10" stroke="#d08a4e88"/><text x="21" y="28" text-anchor="middle" font-size="10" fill="#d08a4e" font-weight="800">IC50</text></svg><span class="term">IC50</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>IC50 (half-maximal inhibitory concentration) is the concentration of an inhibitor required to reduce an enzyme's activity by 50% under defined assay conditions. Lower IC50 means stronger inhibition. RVPSL's reported IC50 of ~20 μM against ACE indicates moderate potency — genuine activity, but orders of magnitude weaker than pharmaceutical ACE inhibitors, which act in the nanomolar range.</div><div class="plain"><span class="plabel">Plain English</span>IC50 is a standard lab measure: how much of a substance does it take to cut an enzyme's activity in half? Lower number = stronger blocker. RVPSL needs about 20 micromolar to halve ACE activity — a respectable middle-of-the-road score, but real blood-pressure drugs do the same job at concentrations thousands of times lower.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb v2" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#5fa69810" stroke="#5fa69888"/><path d="M10 28 C16 22 26 24 32 18" stroke="#5fa698" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="10" cy="28" r="3" fill="#5fa698"/><circle cx="32" cy="18" r="3" fill="#d08a4e"/></svg><span class="term">Cholinesterase</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>Cholinesterases (acetylcholinesterase and butyrylcholinesterase) are enzymes that break down the neurotransmitter acetylcholine, terminating its signaling. Inhibiting them prolongs acetylcholine action — the mechanism of several approved Alzheimer's symptom drugs (e.g., donepezil). Laboratory studies have noted cholinesterase-inhibitory effects for RVPSL; these are early in-vitro observations, not therapeutic evidence.</div><div class="plain"><span class="plabel">Plain English</span>Cholinesterases are enzymes that switch off acetylcholine, a brain chemical important for memory. Blocking them keeps the signal on longer — which is how some approved Alzheimer's drugs work. RVPSL has shown hints of blocking these enzymes in lab dishes. That's an interesting starting clue, not a treatment lead.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb v3" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#c47e8e10" stroke="#c47e8e88"/><path d="M12 30 L21 12 L30 30" stroke="#c47e8e" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="21" cy="22" r="3" fill="#d08a4e"/></svg><span class="term">BACE1</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>BACE1 (beta-site APP-cleaving enzyme 1) is the enzyme that makes the first cut in amyloid precursor protein, initiating production of amyloid-beta fragments studied in Alzheimer's disease. It has been a major (and largely disappointing) drug target. Reported interactions of RVPSL with BACE1-related pathways are preliminary laboratory observations with no demonstrated relevance in living systems.</div><div class="plain"><span class="plabel">Plain English</span>BACE1 is an enzyme that takes the first snip in creating the amyloid fragments linked to Alzheimer's — drug companies spent billions trying to block it, mostly without success. RVPSL has been noted to interact with BACE1-related pathways in early lab work. Given the graveyard of failed BACE1 drugs, a test-tube hint deserves heavy skepticism, not excitement.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#d08a4e14" stroke="#d08a4e"/><rect x="12" y="14" width="18" height="14" rx="7" fill="none" stroke="#d08a4e" stroke-width="2.5"/><circle cx="21" cy="21" r="3" fill="#5fa698"/></svg><span class="term">In vitro</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>"In glass" — experiments conducted in controlled artificial environments: test tubes, assay plates, cell cultures. In-vitro work establishes whether a molecule can do something chemically (e.g., inhibit an enzyme) but cannot establish what it does in a living organism, where absorption, distribution, metabolism, and excretion intervene. All of RVPSL's reported activities are in-vitro findings.</div><div class="plain"><span class="plabel">Plain English</span>"In glass" means tested in lab dishes and test tubes rather than living bodies. It answers "can this molecule block that enzyme?" — a chemistry question. It can't answer "does this help a person?" — a biology question involving digestion, bloodstream, organs, and dosing. Every RVPSL result you've read about here is the first kind.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb v2" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#5fa69814" stroke="#5fa698"/><path d="M10 30 C14 24 18 28 22 20 C26 12 30 18 32 14" stroke="#5fa698" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="32" cy="14" r="3" fill="#c47e8e"/></svg><span class="term">Bioactive peptide</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>Short protein fragments (typically 2–20 amino acids) that exert measurable biological effects — enzyme inhibition, antimicrobial activity, signaling — beyond basic nutrition. They occur naturally when food proteins are digested or processed, and "food-derived bioactive peptides" from milk, soy, and egg are an active research field. RVPSL is studied as one such candidate, with its activities demonstrated only in laboratory assays.</div><div class="plain"><span class="plabel">Plain English</span>Tiny protein fragments that actually do something measurable — block an enzyme, kill microbes, send a signal — beyond just being nutrition. When you digest food, proteins get chopped into pieces, and some of those pieces turn out to be biologically chatty. RVPSL is one of egg's candidates: interesting in the lab, unproven everywhere else.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb v3" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#c47e8e18" stroke="#c47e8e"/><path d="M12 12 L30 12 M12 21 L30 21 M12 30 L24 30" stroke="#c47e8e" stroke-width="2.5" stroke-linecap="round"/></svg><span class="term">Research chemical</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>A compound manufactured and sold exclusively for laboratory investigation, carrying the standard disclaimer "not for human or veterinary use." Research chemicals lack the manufacturing controls, purity guarantees, safety testing, and regulatory oversight of medicines or supplements. Quality and exact activity can vary between suppliers, requiring independent analytical verification before any scientific use.</div><div class="plain"><span class="plabel">Plain English</span>A substance sold strictly for lab experiments, with "not for human or veterinary use" on the label — and that label means it. No safety testing, no purity guarantees, no regulator checking the bottle. What's inside can vary by supplier, so serious researchers verify it themselves before running a single assay.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#d08a4e10" stroke="#d08a4e88"/><path d="M21 8 C15 14 12 20 12 24 C12 30 16 34 21 34 C26 34 30 30 30 24 C30 20 27 14 21 8" stroke="#d08a4e" stroke-width="2.5" fill="none"/><path d="M17 22 L25 22" stroke="#c47e8e" stroke-width="2.5"/></svg><span class="term">Hypertension</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>Persistently elevated arterial blood pressure — typically defined as ≥130/80 mmHg — a leading modifiable risk factor for heart attack, stroke, and kidney disease. ACE inhibitors are first-line therapy for many patients. RVPSL has never been tested for blood-pressure effects in any living organism, let alone humans; its connection to hypertension is purely mechanistic hypothesis from test-tube ACE inhibition.</div><div class="plain"><span class="plabel">Plain English</span>High blood pressure — the silent strain on arteries behind heart attacks, strokes, and kidney damage. ACE-inhibitor pills are a standard treatment. RVPSL's only link to hypertension is a test-tube result: it blocks the same enzyme those pills target, far more weakly, with zero evidence it changes anyone's blood pressure.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb v2" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#5fa69810" stroke="#5fa69888"/><rect x="14" y="10" width="14" height="18" rx="3" fill="none" stroke="#5fa698" stroke-width="2.5"/><path d="M14 32 L28 32" stroke="#5fa698" stroke-width="2.5"/></svg><span class="term">Lyophilized</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>Freeze-dried: water removed by sublimation under vacuum, leaving a stable powder. Peptides are commonly supplied lyophilized because the dry form resists degradation far better than solution. In research, the powder is reconstituted in water or buffer immediately before experiments — a laboratory handling format, not a dosage form.</div><div class="plain"><span class="plabel">Plain English</span>Freeze-dried into a powder — the standard way fragile peptides are shipped, since the dry form keeps much longer than liquid. Researchers dissolve it in water or buffer right before running an experiment. A powder in a vial is a lab supply format, not a medicine you take.</div></div>
+</div>
+<div class="g-item">
+<button class="g-q" aria-expanded="false"><svg class="gthumb v3" viewBox="0 0 42 42"><rect x="3" y="3" width="36" height="36" rx="10" fill="#c47e8e10" stroke="#c47e8e88"/><path d="M10 26 C14 20 18 24 21 20 C24 16 28 20 32 14" stroke="#c47e8e" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="32" cy="14" r="2.5" fill="#d08a4e"/></svg><span class="term">Angiotensin</span><span class="plus">+</span></button>
+<div class="g-a"><div class="gsci"><span class="gslabel">Scientific Meaning</span>A family of peptide hormones regulating blood pressure and fluid balance. Angiotensin I is an inactive precursor; ACE converts it to angiotensin II, a potent vasoconstrictor that raises blood pressure and stimulates aldosterone release. Interrupting this conversion — the mechanism of ACE inhibitors — is one of medicine's most validated cardiovascular strategies. RVPSL's test-tube ACE inhibition touches this same pathway.</div><div class="plain"><span class="plabel">Plain English</span>A family of blood-pressure hormones: angiotensin I is the quiet precursor, and ACE converts it into angiotensin II, which tightens blood vessels and raises pressure. Blocking that conversion is one of the most proven strategies in heart medicine. RVPSL's lab result touches this exact pathway — at the test-tube level only.</div></div>
+</div>
+</div>
+</section>
+
+<section class="chapter" id="ch10">
+<div class="ch-head"><span class="ch-num">10</span><h2>Takeaways — and the limits</h2></div>
+<p class="ch-sub">Ten chapters, distilled. A lab tool, not a therapy.</p>
+<div class="card rv">
+<div class="checkline"><span class="mk">🥚</span><span><strong>Five amino acids from egg white.</strong> RVPSL (Arg-Val-Pro-Ser-Leu) is residues 328–332 of ovotransferrin — a food-derived fragment studied as a bioactive peptide.</span></div>
+<div class="checkline"><span class="mk">🧪</span><span><strong>ACE inhibition is the headline.</strong> IC50 ≈ 20 μM in test-tube assays — moderate potency, orders of magnitude weaker than prescription ACE inhibitors.</span></div>
+<div class="checkline"><span class="mk">🧠</span><span><strong>The Alzheimer's thread is thin.</strong> Early cholinesterase and BACE1-pathway notes are assay hints, not therapeutic evidence — and the BACE1 field is a graveyard of failed drugs.</span></div>
+<div class="checkline"><span class="mk">🚫</span><span><strong>No human data of any kind.</strong> No trials, no safety profile, no dosing, no timelines — in anyone, for anything.</span></div>
+<div class="checkline"><span class="mk">⚗️</span><span><strong>Research chemical only.</strong> Sold with "not for human or veterinary use"; supplier quality varies and needs independent verification.</span></div>
+<div class="checkline"><span class="mk">📣</span><span><strong>Ignore the vendor hype.</strong> "Drug candidate with fewer side effects" is speculation built on early lab work — not evidence of clinical usefulness or safety.</span></div>
+</div>
+<div class="card rv" style="margin-top:16px">
+<h3>Limits of this page</h3>
+<ul>
+<li><strong>All data are preclinical</strong> — test-tube assays and limited animal work only.</li>
+<li><strong>Enzyme inhibition ≠ treatment.</strong> Blocking ACE in a dish does not mean lowering blood pressure in a person.</li>
+<li><strong>No human safety information exists</strong> — side effects, interactions, and risks in people are entirely unknown.</li>
+<li><strong>Not a medicine or supplement.</strong> No approved uses, no established route or dose for humans.</li>
+<li><strong>Not medical advice.</strong> Nothing here is a recommendation for or against any treatment. Talk to a licensed clinician about any health decision.</li>
+</ul>
+</div>
+<div class="keyline rv"><strong>The responsible summary:</strong> an interesting five-amino-acid fragment with genuine test-tube enzyme activity — and no business being anywhere near a human body outside a laboratory.</div>
+</section>
+<div class="btt-tile rv">
+<button class="btt-btn" id="bttTop" aria-label="Back to top">
+<span class="btt-orb" aria-hidden="true"></span>
+<span class="btt-label">Back to Top</span>
+<span class="btt-chev" aria-hidden="true">↑</span>
+</button>
+</div>
+<div class="disclaimer rv">
+<strong>📋 Educational reference only — please read.</strong> This page summarizes publicly available laboratory research on Ovotransferrin (328-332) (RVPSL), a research-only peptide fragment. It is not medical advice and does not recommend any compound or course of action. This peptide is not an approved medicine or supplement in any country, has never been tested in humans, and its safety profile is unknown. Laboratory findings cannot be translated directly to people. Vendor descriptions and online claims about "drug candidacy" or milder side effects are speculative and unproven. The compound is supplied exclusively for laboratory investigation and is not for human or veterinary use. Decisions about any health condition belong with a qualified clinician.
+</div>
+</div>
+</main>
+</div>
+<footer id="pageFooter">
+<div class="wrap">
+<p><strong>Ovotransferrin (328-332) infographic</strong> · An educational overview of RVPSL: origin, ACE-inhibitory activity, early enzyme findings, and the preclinical boundary. Content is reworded from research summaries for readability; it is not medical advice. This is a research chemical with no human trials and no approved uses.</p>
+<p style="margin-top:8px">Design: muted orange, teal &amp; rose · Dark mode default · Dots, confetti &amp; animations respect reduced-motion preferences.</p>
+</div>
+</footer>
+<script>
+const $=id=>document.getElementById(id);
+const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* ---------- ambient dot starfield (SVG circles, CSS transforms only) ---------- */
+(function(){
+  const svg=$('bg-dots');
+  const NS='http://www.w3.org/2000/svg';
+  const PALETTES={
+    dark:['#d08a4e','#5fa698','#c47e8e','#e0a76f','#7fc4b5','#d69aa8'],
+    light:['#a8642c','#3f7f72','#a05568','#8f5527','#35705f','#8e4a5c']
+  };
+  function size(){svg.setAttribute('viewBox','0 0 '+innerWidth+' '+innerHeight);}
+  size(); addEventListener('resize',size);
+  const dots=[];
+  for(let i=0;i<140;i++){
+    const c=document.createElementNS(NS,'circle');
+    const ci=i%PALETTES.dark.length;
+    const r=(1.4+Math.random()*2.2).toFixed(1);
+    const baseOp=(0.30+Math.random()*0.35).toFixed(2);
+    c.setAttribute('r',r);
+    c.setAttribute('opacity',baseOp);
+    const dx=Math.random()*innerWidth, dy=Math.random()*innerHeight;
+    c.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px)';
+    svg.appendChild(c);
+    dots.push({el:c,ci:ci,
+      x:dx, y:dy,
+      vx:(Math.random()-0.5)*0.3, vy:(Math.random()-0.5)*0.3,
+      baseOp:parseFloat(baseOp), ph:Math.random()*6.28, sp:0.004+Math.random()*0.008});
+  }
+  window.applyDotPalette=function(){
+    const pal=PALETTES[document.documentElement.getAttribute('data-theme')==='light'?'light':'dark'];
+    dots.forEach(d=>d.el.setAttribute('fill',pal[d.ci]));
+  };
+  applyDotPalette();
+  if(REDUCED) return;
+  let raf=null;
+  function frame(t){
+    const W=innerWidth,H=innerHeight;
+    for(const d of dots){
+      d.x+=d.vx; d.y+=d.vy;
+      if(d.x<-10)d.x=W+10; if(d.x>W+10)d.x=-10;
+      if(d.y<-10)d.y=H+10; if(d.y>H+10)d.y=-10;
+      d.el.style.transform='translate('+d.x.toFixed(1)+'px,'+d.y.toFixed(1)+'px)';
+      const tw=0.6+0.4*Math.sin(t*d.sp+d.ph);
+      d.el.setAttribute('opacity',(d.baseOp*tw).toFixed(2));
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  function start(){ if(raf==null && !document.hidden) raf=requestAnimationFrame(frame); }
+  function stop(){ if(raf!=null){cancelAnimationFrame(raf); raf=null;} }
+  document.addEventListener('visibilitychange',()=>{document.hidden?stop():start();});
+  start();
+})();
+/* ---------- theme toggle (fixed pill: top 12px, right 14px) ---------- */
+(function(){
+  const btn=$('themeToggle'), label=$('ttLabel');
+  function setTheme(light,persist){
+    document.documentElement.setAttribute('data-theme',light?'light':'');
+    btn.setAttribute('aria-checked',light?'true':'false');
+    label.textContent=light?'Light':'Dark';
+    if(persist){try{localStorage.setItem('ovo-theme',light?'light':'dark');}catch(e){}}
+    if(window.applyDotPalette)applyDotPalette();
+  }
+  const initial=document.documentElement.getAttribute('data-theme')==='light';
+  setTheme(initial,false);
+  btn.addEventListener('click',()=>setTheme(document.documentElement.getAttribute('data-theme')!=='light',true));
+})();
+/* ---------- mobile sidebar ---------- */
+(function(){
+  const btn=$('menuBtn'), backdrop=$('sideBackdrop');
+  function toggle(force){document.body.classList.toggle('side-open',force);}
+  btn.addEventListener('click',e=>{e.stopPropagation();toggle();});
+  backdrop.addEventListener('click',()=>toggle(false));
+  $('chapternav').addEventListener('click',e=>{if(e.target.closest('a'))toggle(false);});
+})();
+/* ---------- nav (sidebar scrollspy + pill indicator, mobile rail), progress ---------- */
+(function(){
+  const links=[...document.querySelectorAll('#chapternav a')];
+  const rlinks=[...document.querySelectorAll('#mrail a')];
+  const sections=links.map(a=>document.querySelector(a.getAttribute('href')));
+  const indicator=$('sideIndicator');
+  function setActive(id){
+    links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+    rlinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+    const act=links.find(a=>a.getAttribute('href')==='#'+id);
+    if(act&&act.offsetParent){
+      indicator.style.opacity='1';
+      indicator.style.top=act.offsetTop+'px';
+      indicator.style.height=act.offsetHeight+'px';
+    } else indicator.style.opacity='0';
+  }
+  const spy=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)setActive(e.target.id);});
+  },{rootMargin:'-30% 0px -55% 0px'});
+  sections.forEach(s=>{if(s)spy.observe(s);});
+  [...links,...rlinks].forEach(a=>{
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      const t=document.querySelector(a.getAttribute('href'));
+      if(!t)return;
+      if(REDUCED)t.scrollIntoView();else t.scrollIntoView({behavior:'smooth',block:'start'});
+      history.replaceState(null,'',a.getAttribute('href'));
+    });
+  });
+  const fill=$('progressFill'), sideFill=$('sideFill'), pct=$('sidePct');
+  function onScroll(){
+    const h=document.documentElement;
+    const max=h.scrollHeight-h.clientHeight;
+    const p=max>0?h.scrollTop/max:0;
+    fill.style.width=(p*100)+'%';
+    sideFill.style.width=(p*100)+'%';
+    pct.textContent=Math.round(p*100)+'%';
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+/* ---------- reveal on scroll ---------- */
+(function(){
+  const els=[...document.querySelectorAll('.rv')];
+  if(REDUCED){els.forEach(e=>e.classList.add('in'));return;}
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:0.08});
+  els.forEach(e=>io.observe(e));
+})();
+/* ---------- glossary accordion (one open, rAF-sequenced switch) ---------- */
+(function(){
+  const items=[...document.querySelectorAll('.g-item')];
+  items.forEach(item=>{
+    const q=item.querySelector('.g-q'), a=item.querySelector('.g-a');
+    q.addEventListener('click',()=>{
+      const wasOpen=item.classList.contains('open');
+      const doOpen=()=>{
+        if(!wasOpen){item.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';q.setAttribute('aria-expanded','true');}
+      };
+      const opened=items.find(i=>i.classList.contains('open'));
+      if(opened&&opened!==item){
+        opened.classList.remove('open');
+        opened.querySelector('.g-a').style.maxHeight='0px';
+        opened.querySelector('.g-q').setAttribute('aria-expanded','false');
+        requestAnimationFrame(()=>requestAnimationFrame(doOpen));
+      }else doOpen();
+      if(wasOpen){item.classList.remove('open');a.style.maxHeight='0px';q.setAttribute('aria-expanded','false');}
+    });
+  });
+})();
+/* ---------- back-to-top tile: 620×42, smooth scroll, reduced-motion safe ---------- */
+(function(){
+  const btn=$('bttTop');
+  btn.addEventListener('click',()=>{
+    const html=document.documentElement;
+    const prev=html.style.scrollBehavior;
+    html.style.scrollBehavior='auto';
+    if(REDUCED){window.scrollTo(0,0);html.style.scrollBehavior=prev;return;}
+    const start=window.scrollY;
+    if(start===0){html.style.scrollBehavior=prev;return;}
+    const dur=650, t0=performance.now();
+    function step(t){
+      const p=Math.min((t-t0)/dur,1);
+      const e=1-Math.pow(1-p,3);
+      window.scrollTo(0,start*(1-e));
+      if(p<1)requestAnimationFrame(step);else html.style.scrollBehavior=prev;
+    }
+    requestAnimationFrame(step);
+  });
+})();
+/* ---------- one-shot footer confetti + toast ---------- */
+(function(){
+  if(REDUCED)return;
+  const cvs=$('confetti'), ctx=cvs.getContext('2d');
+  const toast=$('toast');
+  const PALETTE=['#d08a4e','#5fa698','#c47e8e','#e0a76f','#7fc4b5','#d69aa8'];
+  let fired=false;
+  function size(){cvs.width=innerWidth;cvs.height=innerHeight;}
+  function fire(){
+    fired=true; size();
+    cvs.classList.add('show');
+    const pcs=[];
+    for(let i=0;i<45;i++){
+      pcs.push({x:Math.random()*cvs.width,y:-20-Math.random()*40,
+        vx:(Math.random()-0.5)*1.2, vy:0.7+Math.random()*1.1,
+        w:4+Math.random()*4,h:6+Math.random()*6,
+        r:Math.random()*6.28, vr:(Math.random()-0.5)*0.2,
+        col:PALETTE[i%PALETTE.length], sway:Math.random()*6.28, swaySp:0.01+Math.random()*0.03});
+    }
+    const t0=performance.now(), DUR=4000;
+    function frame(t){
+      const el=t-t0, p=el/DUR;
+      ctx.clearRect(0,0,cvs.width,cvs.height);
+      for(const q of pcs){
+        q.sway+=q.swaySp;
+        q.x+=q.vx+Math.sin(q.sway)*0.6; q.y+=q.vy; q.r+=q.vr;
+        ctx.save(); ctx.translate(q.x,q.y); ctx.rotate(q.r);
+        ctx.globalAlpha=p>0.7?Math.max(0,1-(p-0.7)/0.3):1;
+        ctx.fillStyle=q.col; ctx.fillRect(-q.w/2,-q.h/2,q.w,q.h);
+        ctx.restore();
+      }
+      if(p<1)requestAnimationFrame(frame);
+      else{cvs.classList.remove('show');ctx.clearRect(0,0,cvs.width,cvs.height);}
+    }
+    requestAnimationFrame(frame);
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'),3200);
+  }
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting&&!fired){io.disconnect();fire();}});
+  },{threshold:0.35});
+  const footer=$('pageFooter');
+  if(footer)io.observe(footer);
+  addEventListener('resize',()=>{if(fired)size();});
+})();
+</script>
+</body>
+</html>
